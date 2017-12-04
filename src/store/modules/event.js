@@ -5,14 +5,17 @@ const state = dealEvent.get() || {
 	event: [{
 		title: '未完成',
 		tag: 'toDo',
+		show: true,
 		list: [],
 	}, {
 		title: '已完成',
 		tag: 'done',
+		show: true,
 		list: [],
 	}, {
 		title: '已取消',
 		tag: 'cancel',
+		show: true,
 		list: [],
 	}],
 	count: 0

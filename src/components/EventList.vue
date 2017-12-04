@@ -1,9 +1,9 @@
 <template>
 	<div class="content">
-		<template v-for="item in eventList">
-			<div class="tab">
+		<template v-for="(item, index) in eventList">
+			<div class="tab" @click="changeCollapse(index, $event)">
 				{{item.title}}
-				<span></span>
+				<span :class="{'close': !item.show}"></span>
 			</div>
 			<div class="box">
 				<ul>
@@ -40,6 +40,32 @@ export default {
 	methods: {
 		dealData(status, obj) {
 			this.$store.dispatch(status, obj);
+		},
+		changeCollapse(idx, target) {
+			if (this.eventList[idx].show) {
+				this.closeBox(target);
+			} else {
+				this.openBox(target);
+			}
+			this.eventList[idx].show = !this.eventList[idx].show;
+		},
+		openBox(target) {
+			let boxElement = target.currentTarget.nextElementSibling,
+				ulElement = boxElement.getElementsByTagName('ul')[0];
+			boxElement.style.display = 'block';
+			boxElement.style.height = ulElement.offsetHeight + 'px';
+		},
+		closeBox(target) {
+			let boxElement = target.currentTarget.nextElementSibling,
+				ulElement = boxElement.getElementsByTagName('ul')[0];
+			boxElement.style.height = ulElement.offsetHeight + 'px';
+			// 实现动画效果，需要先执行长度变化，
+			setTimeout(function(){
+				boxElement.style.height = '0px';
+				setTimeout(function () {
+					boxElement.style.display = 'none';
+				}, 300)
+			}, 100)
 		}
 	}
 }
@@ -78,6 +104,9 @@ export default {
 		}
 
 		.box {
+			// transition: display .3s; // 想偷懒没偷成，transition不支持display属性，只能通过height属性模拟手风琴模式
+			transition: height .3s;
+			overflow: hidden;
 			ul {
 				margin: 0;
 				padding: 0;
