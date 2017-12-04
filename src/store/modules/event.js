@@ -79,6 +79,14 @@ const mutations = {
 		states.event[1].list.unshift(payload); // 添加到未完成列表
 		dealEvent.set(states);
 	},
+
+	// 导入
+	[eventType.IMPORT](states, payload) {
+		payload = JSON.parse(payload);
+		states.event = payload.event.event;
+		states.count = payload.event.count;
+		dealEvent.set(states);
+	}
 }
 
 const actions = {
@@ -96,6 +104,9 @@ const actions = {
 	},
 	doneEvent({commit}, params) {
 		commit(eventType.EVENTDONE, params);
+	},
+	import({commit}, params) {
+		commit(eventType.IMPORT, params)
 	}
 }
 

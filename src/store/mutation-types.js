@@ -15,3 +15,6 @@ export const DONETOTODO = 'DONETOTODO';
 
 // 已取消到未完成
 export const CANCELTOTODO = 'CANCELTOTODO';
+
+// 导入
+export const IMPORT = 'IMPORT';

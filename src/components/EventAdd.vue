@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 	.add {
 		display: flex;
 		padding: 30px 0;

@@ -1,12 +1,12 @@
 <template>
 	<header>
 		<h1>
-			记事本
-			<a class="btn" @click="showMenu()">
+			<a class="btn_bar" :class="{'cross': showTool}" @click="showMenu()">
 				<div class="bar"></div>
 				<div class="bar"></div>
 				<div class="bar"></div>
 			</a>
+			记事本
 		</h1>
 	</header>
 </template>
@@ -19,6 +19,7 @@
 				
 			}
 		},
+		props: ['showTool'],
 		methods: {
 			showMenu() {
 				this.$emit('parentMenu');
@@ -27,7 +28,7 @@
 	}
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 	header {
 		height: 70px;
 		line-height: 70px;
@@ -38,9 +39,9 @@
 			margin: 0 auto;
 			color: #fff;
 		}
-		.btn {
+		.btn_bar {
 			position: absolute;
-			right: 10px;
+			left: 10px;
 			top: 0;
 			bottom: 0;
 			margin: auto;

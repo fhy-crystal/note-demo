@@ -9,14 +9,14 @@
 				<ul>
 					<li v-for="value in item.list" class="list">
 						<input type="checkbox" v-show="item.tag=='toDo'" @click="dealData('doneEvent', value)"> <!-- 未完成 -->
-						<input type="checkbox" v-show="item.tag=='done'" @click="dealData('doneTotodo', value)"> <!-- 已完成 -->
+						<input type="checkbox" v-show="item.tag=='done'" :checked="{checked: item.tag=='done'}" @click="dealData('doneTotodo', value)"> <!-- 已完成 -->
 
 						<div :class="{'delete': item.tag=='cancel'}">{{value.content}}</div>
 
 						<span class="time" v-show="item.tag=='done'">{{value.time}}</span> <!-- 已完成时间 -->
 
-						<button class="btn" v-show="item.tag=='toDo'" @click="dealData('cancelEvent', value)">取消</button><!-- 未完成 -->
-						<button class="btn" v-show="item.tag=='cancel'" @click="dealData('cancelTotodo', value)">恢复</button><!-- 已取消 -->
+						<a class="btn" v-show="item.tag=='toDo'" @click="dealData('cancelEvent', value)">取消</a><!-- 未完成 -->
+						<a class="btn" v-show="item.tag=='cancel'" @click="dealData('cancelTotodo', value)">恢复</a><!-- 已取消 -->
 					</li>
 				</ul>
 			</div>
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang='scss'>
+<style scoped lang="scss">
 	.content {
 		.tab {
 			position: relative;
@@ -145,20 +145,6 @@ export default {
 					bottom: 0;
 					right: 20px;
 					margin: auto;
-					padding: 0;
-					width: 50px;
-					height: 30px;
-					line-height: 30px;
-					background: #fff;
-					border: 1px solid #c0ccda;
-					border-radius: 4px;
-					color: #666;
-					font-size: 12px;
-					cursor: pointer;
-					&:hover {
-						border: 1px solid #00b0f0;
-						color: #00b0f0;
-					}
 				}
 				.delete {
 					text-decoration: line-through;
