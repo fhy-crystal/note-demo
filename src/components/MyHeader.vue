@@ -30,12 +30,14 @@
 
 <style scoped lang="scss">
 	header {
+		position: relative;
+		z-index: 11;
 		height: 70px;
 		line-height: 70px;
 		background-color: #00b0f0;
 		h1 {
 			position: relative;
-			max-width: 800px;
+			max-width: 1000px;
 			margin: 0 auto;
 			color: #fff;
 		}

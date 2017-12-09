@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<template v-for="(item, index) in eventList">
+		<template v-for="(item, index) in displayList">
 			<div class="tab" @click="changeCollapse(index, $event)">
 				{{item.title}}
 				<span :class="{'close': !item.show}"></span>
@@ -8,15 +8,25 @@
 			<div class="box">
 				<ul>
 					<li v-for="value in item.list" class="list">
-						<input type="checkbox" v-show="item.tag=='toDo'" @click="dealData('doneEvent', value)"> <!-- 未完成 -->
-						<input type="checkbox" v-show="item.tag=='done'" :checked="{checked: item.tag=='done'}" @click="dealData('doneTotodo', value)"> <!-- 已完成 -->
+						<!-- 未完成 -->
+						<input type="checkbox" :key="value.id" :class="{'test': value.type==0}" v-show="value.type==0" @click="dealData('doneEvent', value)"> 
 
-						<div :class="{'delete': item.tag=='cancel'}">{{value.content}}</div>
+						<!-- 已完成 -->
+						<input type="checkbox" v-show="value.type==1" :key="value.id" :checked="{checked: value.type==1}" @click="dealData('todoEvent', value)"> 
 
-						<span class="time" v-show="item.tag=='done'">{{value.time}}</span> <!-- 已完成时间 -->
+						<div :class="{'delete': value.type==2}">{{value.content}}</div>
 
-						<a class="btn" v-show="item.tag=='toDo'" @click="dealData('cancelEvent', value)">取消</a><!-- 未完成 -->
-						<a class="btn" v-show="item.tag=='cancel'" @click="dealData('cancelTotodo', value)">恢复</a><!-- 已取消 -->
+						<!-- 已完成时间 -->
+						<span class="time" v-show="value.type==1">{{value.time}}</span> 
+
+						<!-- 未完成 -->
+						<a class="btn" v-show="value.type==0" @click="dealData('cancelEvent', value)">取消</a>
+
+						<!-- 未完成 -->
+						<!-- <a class="btn done" v-show="value.type==0" @click="dealData('doneEvent', value)">完成</a> -->
+
+						<!-- 已取消 -->
+						<a class="btn" v-show="value.type==2" @click="dealData('todoEvent', value)">恢复</a>
 					</li>
 				</ul>
 			</div>
@@ -35,6 +45,9 @@ export default {
 	computed: {
 		eventList() {
 			return this.$store.getters.getEventList;
+		},
+		displayList() {
+			return this.$store.getters.getDisplayList;
 		}
 	},
 	methods: {
@@ -42,12 +55,12 @@ export default {
 			this.$store.dispatch(status, obj);
 		},
 		changeCollapse(idx, target) {
-			if (this.eventList[idx].show) {
+			if (this.displayList[idx].show) {
 				this.closeBox(target);
 			} else {
 				this.openBox(target);
 			}
-			this.eventList[idx].show = !this.eventList[idx].show;
+			this.displayList[idx].show = !this.displayList[idx].show;
 		},
 		openBox(target) {
 			let boxElement = target.currentTarget.nextElementSibling,
@@ -83,6 +96,7 @@ export default {
 			cursor: pointer;
 			background-color: #00b0f0;
 			border-radius: 4px;
+			border-bottom: 1px solid #fff;
 			span {
 				position: absolute;
 				right: 20px;
@@ -145,6 +159,9 @@ export default {
 					bottom: 0;
 					right: 20px;
 					margin: auto;
+				}
+				.done {
+					right: 85px;
 				}
 				.delete {
 					text-decoration: line-through;

@@ -11,7 +11,7 @@
 				<a class="btn" @click="upladData()">导入数据</a>
 			</li>
 			<li>
-				<a class="btn">编辑数据</a>
+				<a class="btn" @click="editData">编辑数据</a>
 				
 			</li>
 			<li>
@@ -31,7 +31,7 @@ export default {
 	props: ['showTool'],
 	computed: {
 		getData() {
-			return JSON.stringify(this.$store.state);
+			return JSON.stringify(this.$store.state.event);
 		}
 	},
 	methods: {
@@ -45,6 +45,9 @@ export default {
 		},
 		upladData() {
 			this.$emit('uploadData');
+		},
+		editData() {
+			this.$emit('openTable');
 		},
 		clearData() {
 			this.$emit('clearData');

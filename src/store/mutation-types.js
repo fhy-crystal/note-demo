@@ -18,3 +18,12 @@ export const CANCELTOTODO = 'CANCELTOTODO';
 
 // 导入
 export const IMPORT = 'IMPORT';
+
+// 清除
+export const CLEAR = 'CLEAR';
+
+// 编辑
+export const EDIT = 'EDIT';
+
+// 删除
+export const DELETE = 'DELETE';

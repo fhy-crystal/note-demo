@@ -16,8 +16,8 @@
 			</div>
 			<div class="dialog_footer">
 				<a class="btn btn_cancel" @click="cancel()">取消</a>
-				<a class="btn btn_confirm" v-if="msg!=='upload'">确定</a>
-				<a class="btn btn_confirm" @click="confirmUpload()">确定</a>
+				<a class="btn btn_confirm" @click="confirm()" v-if="msg!=='upload'">确定</a>
+				<a class="btn btn_confirm" v-else @click="confirmUpload()">确定</a>
 			</div>
 		</div>
 	</div>
@@ -59,6 +59,10 @@ export default {
 		// 取消
 		cancel() {
 			this.$emit('cancelBtn')
+		},
+		// 普通确认
+		confirm() {
+			this.$emit('confirmBtn')
 		},
 		// 确认导入
 		confirmUpload() {

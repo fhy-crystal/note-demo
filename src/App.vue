@@ -4,11 +4,16 @@
 		<section class="container">
 			<EventAdd/>
 			<EventList/>
-			<SliderBar :show-tool="isShowTool" @uploadData="uploadBtn" @clearData="clearMethod"/>
+			<SliderBar :show-tool="isShowTool" 
+						@uploadData="uploadBtn" 
+						@clearData="clearMethod"
+						@openTable="isShowTool=false;isShowTabel=true" />
 		</section>
 		<transition name="dialog"> 
-			<DialogBox v-show="dialog" @cancelBtn="dialog=false" :msg="tips"/>
+			<DialogBox v-show="dialog" @cancelBtn="dialog=false" :msg="tips" @confirmBtn="confirm"/>
 		</transition>
+
+		<EventTable :show-table="isShowTabel" @delete="deleteMethod"/>
 	</div>
 </template>
 
@@ -16,6 +21,7 @@
 import MyHeader from './components/MyHeader'
 import EventList from './components/EventList'
 import EventAdd from './components/EventAdd'
+import EventTable from './components/EventTable'
 import SliderBar from './components/SliderBar'
 import DialogBox from './components/Dialog'
 
@@ -25,13 +31,20 @@ export default {
 		return {
 			dialog: false,
 			isShowTool: false,
-			tips: ''
+			isShowTabel: false,
+			tips: '',
+			dialog_type: '',
+			delInfo: {
+				index: '',
+				id: ''
+			}
 		}
 	},
 	components: {
 		MyHeader,
 		EventList,
 		EventAdd,
+		EventTable,
 		SliderBar,
 		DialogBox
 	},
@@ -43,11 +56,32 @@ export default {
 			this.dialog = true;
 			this.isShowTool = false;
 			this.tips = 'upload';
+			this.dialog_type = 'upload';
 		},
 		clearMethod() {
 			this.dialog = true;
 			this.isShowTool = false;
 			this.tips = '清空后无法恢复，确认清空吗？';
+			this.dialog_type = 'clear'
+		},
+		confirm() {
+			if (this.dialog_type == 'clear') {
+				this.$store.dispatch('clearData');
+				this.dialog = false;
+			} else if (this.dialog_type == 'del') {
+				this.$store.dispatch('deleteEvent', this.delInfo);
+				this.dialog = false;
+			}
+		},
+		deleteMethod(idx, id) {
+			this.dialog = true;
+			this.dialog_type = 'del';
+			this.tips = '删除后无法恢复，确认删除吗？';
+			this.delInfo = {
+				index: idx,
+				id: id
+			}
+			
 		}
 	}
 }
@@ -84,6 +118,17 @@ export default {
 		border: 1px solid #00b0f0;
 		color: #00b0f0;
 	}
+}
+
+select.simulate {
+	border: 0;
+	height: 20px;
+	line-height: 20px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	background-color: inherit;
+	color: #2c3e50;
 }
 
 // dialog动画样式

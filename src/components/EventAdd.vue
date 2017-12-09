@@ -23,7 +23,8 @@ export default {
 			let postBody = {
 				id: 0,
 				content: '',
-				time: ''
+				time: '',
+				type: 0
 			}
 			if (this.content) {
 				postBody.content = this.content.trim();
