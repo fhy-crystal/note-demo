@@ -8,16 +8,13 @@
 			</div>
 			<!-- 筛选 -->
 			<div class="select_block">
-				<div class="select_box">
-					<div class="select_value">筛选类型</div>
+				<div class="select_box" :class="{'active': isSelect}">
+					<div class="select_value" @click="isSelect=!isSelect">{{selectInfo.name}}</div>
 					<div class="select_body">
-						<div class="option">筛选类型</div>
-						<div class="option">未完成</div>
-						<div class="option">已完成</div>
-						<div class="option">已取消</div>
+						<div v-for="item in typeList" class="option" @click="select(item)">{{item.value}}</div>
 					</div>
 				</div>
-				<input type="text" class="search_input" placeholder="筛选关键词">
+				<input type="text" class="search_input" v-model="searchKey" placeholder="筛选关键词">
 			</div>
 			<table class="table">
 				<thead>
@@ -44,6 +41,8 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<a class="btn back" @click="backBtn">返回</a>
 		</div>
 	</div>
 </template>
@@ -53,6 +52,9 @@ export default {
 	data() {
 		return {
 			typeList: [{
+				key: -1,
+				value: '筛选类型'
+			}, {
 				key: 0,
 				value: '未完成'
 			}, {
@@ -63,20 +65,48 @@ export default {
 				value: '已取消'
 			}],
 			isEdit: false,
+			isSelect: false,
 			editInfo: {
 				content: '',
 				id: 0,
 				index: 0
 			},
+			searchKey: '',
+			selectInfo: {
+				type: -1,
+				name: '筛选类型'
+			}
 		}
 	},
 	props: ['showTable'],
 	computed: {
 		eventList() {
-			return this.$store.getters.getEventList;
+			let _this  = this;
+			return this.$store.getters.getEventList.filter(function(data) {
+				if (_this.selectInfo.type !== -1 && _this.selectKey == '') {
+					if (data.type == _this.selectInfo.type) {
+						return data;
+					}
+				} else if(_this.selectInfo.type !== -1 && _this.selectKey !== '') {
+					if (data.type == _this.selectInfo.type && data.content.indexOf(_this.searchKey) > -1) {
+						return data;
+					}
+				} else if (_this.selectInfo.type == -1 && _this.searchKey !== '') {
+					if (data.content.indexOf(_this.searchKey) > -1) {
+						return data
+					}
+				} else {
+					return data;
+				}
+			});
 		}
 	},
 	methods: {
+		select(obj) {
+			this.selectInfo.type = obj.key;
+			this.selectInfo.name = obj.value;
+			this.isSelect = false;
+		},
 		editData(idx) {
 			this.isEdit = true;
 			this.editInfo = {
@@ -96,6 +126,9 @@ export default {
 		},
 		deleteBtn(idx, id) {
 			this.$emit('delete', idx, id)
+		},
+		backBtn() {
+			this.$emit('closeTable');
 		}
 	}
 }
@@ -122,7 +155,7 @@ export default {
 
 			.edit_box {
 				position: fixed;
-				top: 70px;
+				top: 0;
 				width: 100%;
 				display: flex;
 				max-width: 1000px;
@@ -156,7 +189,6 @@ export default {
 					line-height: 38px;
 					color: #fff;
 					border: 0;
-					background: #00b0f0;
 					font-size: 16px;
 				}
 			}
@@ -199,7 +231,7 @@ export default {
 						position: absolute;
 						left: 0;
 						top: 35px;
-						width: 95px;
+						width: 87px;
 						height: 0;
 						text-indent: -10px;
 						line-height: 30px;
@@ -211,6 +243,14 @@ export default {
 						border-radius: 3px;
 						background-color: #fff;
 						transition: all .3s;
+					}
+
+					&.active {
+						.select_body {
+							height: 122px;
+							border: 1px solid #eee;
+							box-shadow: 0 0 1px #ddd;
+						}
 					}
 				}
 				.search_input {
@@ -250,10 +290,13 @@ export default {
 					&.del {
 						background-color: #f57067;
 					}
-					&.edit {
-						background-color: #00b0f0;
-					}
 				}
+			}
+
+			.back {
+				float: right;
+				margin-top: 20px;
+				border: 1px solid #c0ccda;
 			}
 		}
 		

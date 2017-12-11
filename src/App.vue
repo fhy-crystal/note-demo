@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" :class="[theme]">
 		<MyHeader @parentMenu="sliderMenu" :show-tool="isShowTool"/>
 		<section class="container">
 			<EventAdd/>
@@ -8,12 +8,13 @@
 						@uploadData="uploadBtn" 
 						@clearData="clearMethod"
 						@openTable="isShowTool=false;isShowTabel=true" />
+			<Theme :show-theme="isShowTheme"/>
 		</section>
 		<transition name="dialog"> 
 			<DialogBox v-show="dialog" @cancelBtn="dialog=false" :msg="tips" @confirmBtn="confirm"/>
 		</transition>
 
-		<EventTable :show-table="isShowTabel" @delete="deleteMethod"/>
+		<EventTable :show-table="isShowTabel" @delete="deleteMethod" @closeTable="closeTable"/>
 	</div>
 </template>
 
@@ -23,6 +24,7 @@ import EventList from './components/EventList'
 import EventAdd from './components/EventAdd'
 import EventTable from './components/EventTable'
 import SliderBar from './components/SliderBar'
+import Theme from './components/Theme'
 import DialogBox from './components/Dialog'
 
 export default {
@@ -32,6 +34,7 @@ export default {
 			dialog: false,
 			isShowTool: false,
 			isShowTabel: false,
+			isShowTheme: false,
 			tips: '',
 			dialog_type: '',
 			delInfo: {
@@ -46,7 +49,13 @@ export default {
 		EventAdd,
 		EventTable,
 		SliderBar,
+		Theme,
 		DialogBox
+	},
+	computed: {
+		theme() {
+			return this.$store.getters.getTheme;
+		}
 	},
 	methods: {
 		sliderMenu() {
@@ -81,7 +90,10 @@ export default {
 				index: idx,
 				id: id
 			}
-			
+		},
+		// 关闭表格
+		closeTable() {
+			this.isShowTabel = false;
 		}
 	}
 }
@@ -89,6 +101,7 @@ export default {
 
 <style lang="scss">
 @import '../static/css/normalize.css';
+@import '../static/css/theme.scss';
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -108,16 +121,10 @@ export default {
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
-	background-color: #fff;
-	border: 1px solid #c0ccda;
 	border-radius: 4px;
 	color: #666;
 	font-size: 12px;
 	cursor: pointer;
-	&:hover {
-		border: 1px solid #00b0f0;
-		color: #00b0f0;
-	}
 }
 
 select.simulate {

@@ -94,7 +94,6 @@ export default {
 			line-height: 40px;
 			color: #fff;
 			cursor: pointer;
-			background-color: #00b0f0;
 			border-radius: 4px;
 			border-bottom: 1px solid #fff;
 			span {
@@ -159,6 +158,7 @@ export default {
 					bottom: 0;
 					right: 20px;
 					margin: auto;
+					border: 1px solid #c0ccda;
 				}
 				.done {
 					right: 85px;

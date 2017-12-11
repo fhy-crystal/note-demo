@@ -1,3 +1,4 @@
+// event
 // 添加事件
 export const EVENTADD = 'EVENTADD';
 
@@ -27,3 +28,8 @@ export const EDIT = 'EDIT';
 
 // 删除
 export const DELETE = 'DELETE';
+
+
+
+// theme
+export const SWITCHTHEME = 'SWITCHTHEME';

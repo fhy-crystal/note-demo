@@ -34,7 +34,6 @@
 		z-index: 11;
 		height: 70px;
 		line-height: 70px;
-		background-color: #00b0f0;
 		h1 {
 			position: relative;
 			max-width: 1000px;

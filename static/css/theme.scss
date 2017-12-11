@@ -1,0 +1,78 @@
+$blue: #00b0f0;
+$blue_hover_color: #08aae5;
+
+$orange: #f4b976;
+$orange_hover_color : #e9ae6a;
+
+@mixin changeColor($main, $hover) {
+	header {
+		background-color: $main;
+	}
+	// 对话框
+	.dialog {
+		.dialog_header {
+			background-color: $main;
+		}
+
+		.btn_confirm {
+			background-color: $main;
+			border-color: $main;
+		}
+	}
+	
+	// 添加事件
+	.add {
+		.submit {
+			background-color: $main;
+		}
+	}
+	
+	// 列表展示
+	.content {
+		.tab {
+			background-color: $main;
+		}
+		.btn {
+			&:hover {
+				border-color: $hover!important;
+				color: $hover;
+			}
+		}
+	}
+	
+	// 表格编辑
+	.table_box {
+		.content {
+			.confirm_edit {
+				background-color: $main;
+			}
+		}
+
+		.btn.edit {
+			background-color: $main;
+		}
+
+		.back {
+			&:hover {
+				border-color: $hover!important;
+				color: $hover;
+			}
+		}
+	}
+	
+	// 侧边框
+	.tool_box {
+		li {
+			.btn {
+				background-color: $main;
+			}
+		}
+	}
+}
+
+.blue {
+	@include changeColor(#{$blue},#{$blue_hover_color})
+}
+.orange {
+	@include changeColor(#{$orange},#{$orange_hover_color})
+}

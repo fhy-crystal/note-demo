@@ -14,6 +14,7 @@ function dealData(name) {
 }
 
 const dealEvent = new dealData('eventData');
+const dealTheme = new dealData('themeData');
 
 const formatDate = () => {
 	let date = new Date(),
@@ -26,5 +27,6 @@ const formatDate = () => {
 
 export {
 	dealEvent,
+	dealTheme,
 	formatDate
 }

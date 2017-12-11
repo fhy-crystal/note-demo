@@ -67,7 +67,7 @@ export default {
 		box-sizing: border-box;
 		transform: translateX(-250px);
 		transition: transform .3s;
-		background: rgba(0, 0, 0, .5);
+		background-color: rgba(0, 0, 0, .5);
 		font-size: 16px;
 		z-index: 9;
 
@@ -83,8 +83,6 @@ export default {
 				height: 40px;
 				line-height: 40px;
 				transition: background-color .3s ease-in;
-				background-color: #00b0f0;
-				border-color: #00b0f0;
 				color: #fff;
 				font-size: 16px;
 			}

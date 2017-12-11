@@ -1,7 +1,7 @@
 <template>
 	<div class="add">
 		<input type="text" v-model="content" placeholder="待办事项" @keyup.enter="submit">
-		<button class="submit" @click="submit">提交</button>
+		<a class="submit btn" @click="submit">提交</a>
 	</div>
 </template>
 
@@ -58,12 +58,9 @@ export default {
 		.submit {
 			width: 80px;
 			height: 40px;
-			line-height: 26px;
+			line-height: 40px;
 			color: #fff;
-			background-color: #00b0f0;
-			border: 0;
-			border-radius: 4px;
-			cursor: pointer;
+			font-size: 16px;
 		}
 	}
 </style>

@@ -103,7 +103,6 @@ export default {
 
 			.dialog_header {
 				padding: 15px 20px;
-				background-color: #00b0f0;
 				color: #fff;
 			}
 			.dialog_content {
@@ -131,9 +130,7 @@ export default {
 				padding: 0 20px 15px 20px;
 				text-align: right;
 				.btn_confirm {
-					background-color: #00b0f0;
 					color: #fff;
-					border-color: #00b0f0;
 				}
 			}
 		}
