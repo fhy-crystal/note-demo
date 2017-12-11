@@ -1,5 +1,6 @@
 <template>
 	<div class="theme_box" :class="{'show_theme': showTheme}">
+		<a class="back" @click="back()"></a>
 		<ul>
 			<li>点击切换主题色</li>
 			<li>
@@ -31,8 +32,12 @@ export default {
 		}
 	},
 	methods: {
+		back() {
+			this.$emit('back');
+		},
 		changeTheme(color) {
-			this.$store.dispatch('changeTheme', color)
+			this.$store.dispatch('changeTheme', color);
+			this.$emit('close');
 		}
 	}
 }
@@ -55,6 +60,18 @@ export default {
 
 		&.show_theme {
 			transform: translateX(0);
+		}
+
+		.back {
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			border: {
+				top: 2px solid #666;
+				right: 2px solid #666;
+			};
+			transform: rotate(-135deg);
+			cursor: pointer;
 		}
 
 		li {

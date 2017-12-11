@@ -1,20 +1,21 @@
 <template>
 	<div id="app" :class="[theme]">
-		<MyHeader @parentMenu="sliderMenu" :show-tool="isShowTool"/>
+		<MyHeader @parentMenu="sliderMenu" :show-tool="isShowTool" :show-theme="isShowTheme"/>
 		<section class="container">
 			<EventAdd/>
 			<EventList/>
 			<SliderBar :show-tool="isShowTool" 
 						@uploadData="uploadBtn" 
 						@clearData="clearMethod"
-						@openTable="isShowTool=false;isShowTabel=true" />
-			<Theme :show-theme="isShowTheme"/>
+						@openTable="isShowTool=false;isShowTabel=true"
+						@themeSlider="isShowTool=false;isShowTheme=true" />
+			<Theme :show-theme="isShowTheme" @close="isShowTheme=false" @back="isShowTool=true;isShowTheme=false"/>
 		</section>
 		<transition name="dialog"> 
 			<DialogBox v-show="dialog" @cancelBtn="dialog=false" :msg="tips" @confirmBtn="confirm"/>
 		</transition>
 
-		<EventTable :show-table="isShowTabel" @delete="deleteMethod" @closeTable="closeTable"/>
+		<EventTable :show-table="isShowTabel" @delete="deleteMethod" @closeTable="closeTable" />
 	</div>
 </template>
 
@@ -60,6 +61,7 @@ export default {
 	methods: {
 		sliderMenu() {
 			this.isShowTool = !this.isShowTool;
+			
 		},
 		uploadBtn() {
 			this.dialog = true;

@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<h1>
-			<a class="btn_bar" :class="{'cross': showTool}" @click="showMenu()">
+			<a class="btn_bar" :class="{'cross': showTool||showTheme}" @click="showMenu()">
 				<div class="bar"></div>
 				<div class="bar"></div>
 				<div class="bar"></div>
@@ -19,7 +19,7 @@
 				
 			}
 		},
-		props: ['showTool'],
+		props: ['showTool', 'showTheme'],
 		methods: {
 			showMenu() {
 				this.$emit('parentMenu');

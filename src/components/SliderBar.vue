@@ -2,7 +2,7 @@
 	<div class="tool_box" :class="{'show_tool': showTool}">
 		<ul>
 			<li>
-				<a class="btn">切换主题</a>
+				<a class="btn" @click="changeTheme">切换主题</a>
 			</li>
 			<li>
 				<a class="btn" @click="download('noteData.txt', getData)">下载数据</a>
@@ -35,6 +35,9 @@ export default {
 		}
 	},
 	methods: {
+		changeTheme() {
+			this.$emit('themeSlider');
+		},
 		download(filename, content) {
 			let aElement = document.createElement('a');
 			let blob = new Blob([content]);

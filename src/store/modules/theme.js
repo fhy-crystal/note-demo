@@ -1,7 +1,7 @@
 import * as eventType from '../mutation-types';
 import { dealTheme, formatDate } from '../../../static/js/public';
 
-const state = {
+const state = dealTheme.get() || {
 	theme: 'blue'
 };
 
